@@ -9,13 +9,14 @@ End-to-end UI and API automation for the OrangeHRM demo site, built with Playwri
 - Node.js 18 or later (20 LTS recommended)
 - npm 9 or later
 - Git
+- Apache JMeter 5.6.3 or later (only needed to run the concurrent-load plan)
 
 ## Setup
 
 ```
 bash
 # 1. Clone the repository
-git clone <REPOSITORY_URL>
+git clone https://github.com/karthick-c-CK/Orange-HRM-karthick.c.git
 cd orangehrm-playwright-pom
 
 # 2. Install dependencies
