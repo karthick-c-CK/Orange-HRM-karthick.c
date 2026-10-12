@@ -11,6 +11,7 @@
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
+    "test:performance": "playwright test tests/performance/employee-lifecycle-performance.spec.ts",
     "report": "playwright show-report reports/html",
     "typecheck": "tsc --noEmit"
   },

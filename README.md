@@ -46,7 +46,10 @@ cp .env.example .env        # Windows: copy .env.example .env
 │   ├── types/                         # TypeScript interfaces
 │   └── utils/                         # Env config, constants, logger
 ├── tests/
-│   └── e2e/employee-lifecycle.spec.ts # End-to-end scenario
+│   ├── e2e/employee-lifecycle.spec.ts # End-to-end scenario
+│   └── performance/
+│       ├── employee-lifecycle-performance.spec.ts # Single-user browser timing
+│       └── orangehrm-authenticated-read-load.jmx # Concurrent HTTP load baseline
 ├── test-data/
 │   ├── employees.json                 # Data-driven employee input
 │   └── assets/profile-picture.png     # Profile image used by test
@@ -75,12 +78,42 @@ npm run test:headed
 # Run in Playwright debug mode
 npm run test:debug
 
+# Run the full employee lifecycle performance measurement
+npm run test:performance
+
 # Type-check the project
 npm run typecheck
 
 # Open the HTML report after a run
 npm run report
 ```
+
+The performance test reports elapsed time for each employee lifecycle phase and attaches a JSON summary to the Playwright report. These measurements include browser interactions, application response time, and test assertions; they are useful as a single-user baseline, not as concurrent-user load testing.
+
+## JMeter Concurrent Load Baseline
+
+The JMeter plan runs five virtual users with a 10-second ramp-up and a 60-second thread-group duration. Each virtual user logs in once, then repeatedly requests the dashboard, PIM employee-list page, and employees API with one-second pacing between requests. It is an authenticated, read-only HTTP load baseline; it does not run a browser, upload a profile picture, or create/edit/delete employees.
+
+Install Apache JMeter 5.6.3 or later and ensure `jmeter` is on `PATH`. Set credentials in the current PowerShell session (do not put them in the `.jmx` file):
+
+```powershell
+$env:ORANGEHRM_USERNAME = "your-authorized-test-username"
+$env:ORANGEHRM_PASSWORD = "your-authorized-test-password"
+```
+
+Run the test only against an environment you are authorized to load-test. The plan defaults to `http://localhost:8080`; the public OrangeHRM demo requires the explicit target options below and should only be used with authorization:
+
+```powershell
+jmeter -n -t tests/performance/orangehrm-authenticated-read-load.jmx `
+  "-Jhost=opensource-demo.orangehrmlive.com" "-Jprotocol=https" "-Jport=443" `
+  "-Jorigin=https://opensource-demo.orangehrmlive.com" `
+  "-Jreferer=https://opensource-demo.orangehrmlive.com/web/index.php/auth/login" `
+  -l reports/jmeter-load.jtl -e -o reports/jmeter-load-html
+```
+
+Open `reports/jmeter-load-html/index.html` to review the generated aggregate report. Remove/archive the prior JMeter result file and HTML report directory before rerunning if JMeter reports that the output already exists. Do not commit credentials or result artifacts containing environment details.
+
+The plan asserts that each virtual user reaches the dashboard after login and receives authenticated JSON from the employees API. If login redirects back to the login page or the API returns `401`, treat the run as failed rather than using its timings as authenticated application performance results. The shared public demo may reject concurrent or non-browser sessions; use a test/staging instance with authorized load-test credentials for a reliable authenticated baseline.
 
 ## Test Artifacts
 
@@ -90,6 +123,8 @@ npm run report
 | Test run video | `test-results/` (also embedded in the HTML report) |
 | Traces (on failure) | `test-results/` (view with `npx playwright show-trace <file>`) |
 | Failure screenshots | `test-results/` |
+| Submission copy of the Playwright HTML report | `submission-artifacts/playwright-report/index.html` |
+| Submission copy of the test video | `submission-artifacts/test-run-video.webm` |
 
 ## Configuration
 
@@ -130,9 +165,9 @@ json
 | `@types/node` | Node.js type definitions |
 | `dotenv` | Loads environment variables from `.env` |
 
-## Reviewers
+## Submission
 
-- Reviewer 1: `<REVIEWER_ID_1>`
-- Reviewer 2: `<REVIEWER_ID_2>`
-```
-`
+- Candidate: Karthick C
+- GitHub account: [karthick-c-CK](https://github.com/karthick-c-CK)
+- Submission archive filename: `Karthick_C_OrangeHRM_Automation.zip`
+- Reviewer GitHub IDs were not included in the assessment brief provided. Add the reviewers as repository collaborators once their usernames are available.

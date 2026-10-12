@@ -35,16 +35,25 @@ export class EmployeeListPage extends BasePage {
   }
 
   async deleteEmployee(employeeId: string): Promise<void> {
-    await this.resultRow(employeeId).locator('.oxd-checkbox-input').click();
-    await this.page.getByRole('button', { name: 'Delete Selected', exact: true }).click();
-    await this.page.getByRole('button', { name: 'Yes, Delete', exact: true }).click();
+    const row = this.resultRow(employeeId);
+    const checkbox = row.locator('.oxd-checkbox-input').first();
+
+    await checkbox.click();
+
+    const deleteButton = this.page.locator('button:has-text("Delete Selected")');
+    await expect(deleteButton, `Delete Selected should be available after selecting employee ${employeeId}`).toBeVisible();
+    await deleteButton.click();
+
+    const confirmDeleteButton = this.page.locator('button:has-text("Yes, Delete")');
+    await expect(confirmDeleteButton, 'Confirmation modal should show the delete confirmation').toBeVisible();
+    await confirmDeleteButton.click();
   }
 
   async expectNoRecords(): Promise<void> {
     await expect(
-      this.page.getByText('No Records Found', { exact: true }),
-      'Employee list should show "No Records Found" after deletion',
-    ).toBeVisible();
+      this.page.locator('.oxd-table-body .oxd-table-row'),
+      'Employee list should be empty after deletion',
+    ).toHaveCount(0);
   }
 
   private resultRow(employeeId: string): Locator {
