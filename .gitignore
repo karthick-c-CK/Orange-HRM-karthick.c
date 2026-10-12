@@ -1,0 +1,8 @@
+#git ignore file for OrangeHRM Playwright POM project   
+node_modules/
+dist/
+.env
+reports/
+test-results/
+playwright-report/
+blob-report/

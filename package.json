@@ -1,0 +1,23 @@
+{
+  "name": "orangehrm-playwright-pom",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Employee lifecycle UI and API automation for OrangeHRM using Playwright, TypeScript and the Page Object Model.",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "install:browsers": "playwright install --with-deps chromium",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report reports/html",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^20.14.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.5.0"
+  }
+}

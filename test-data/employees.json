@@ -1,0 +1,12 @@
+[
+  {
+    "firstName": "Aisha",
+    "lastName": "Rahman",
+    "employeeIdPrefix": "QA",
+    "profilePicture": "assets/profile-picture.png",
+    "jobDetails": {
+      "jobTitle": "QA Engineer",
+      "employmentStatus": "Full-Time Contract"
+    }
+  }
+]
