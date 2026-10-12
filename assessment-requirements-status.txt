@@ -1,0 +1,29 @@
+QA AUTOMATION TECHNICAL ASSESSMENT - STATUS
+Candidate: Karthick C
+
+Requirement                                      Status
+------------------------------------------------ -----------------------------------------------
+Employee lifecycle UI workflow                  Implemented and passed
+  Login, add employee with data and photo,
+  edit, API validation, delete, and logout
+Page Object Model, Playwright Test, TypeScript   Implemented
+Descriptive assertions and framework structure  Implemented
+README, setup/run instructions, dependencies    Included
+HTML test report                                Generated and pushed
+Test-run video                                  Generated and pushed
+Use of AI tools                                 Used during development
+JMeter or k6 performance testing                JMeter plan included; public-demo run failed
+                                                  authentication/API checks; no valid load
+                                                  result has been demonstrated
+GitHub submission                               Pushed to the configured repository;
+                                                  confirm repository visibility is public
+Reviewer access                                 Reviewer GitHub IDs were not available
+
+Overall: Most requirements are covered. A successful authenticated JMeter run against an
+authorized test environment is still needed to demonstrate performance-test results.
+
+Repository:
+https://github.com/karthick-c-CK/Orange-HRM-karthick.c
+
+Test video in repository:
+submission-artifacts/test-run-video.webm

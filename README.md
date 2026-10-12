@@ -112,7 +112,7 @@ jmeter -n -t tests/performance/orangehrm-authenticated-read-load.jmx `
   -l reports/jmeter-load.jtl -e -o reports/jmeter-load-html
 ```
 
-Open `reports/jmeter-load-html/index.html` to review the generated aggregate report. Remove/archive the prior JMeter result file and HTML report directory before rerunning if JMeter reports that the output already exists. Do not commit credentials or result artifacts containing environment details.
+Open `reports/jmeter-load-html/index.html` to review the generated aggregate report. Remove/archive the prior JMeter result file and HTML report directory before rerunning if JMeter reports that the output already exists. Do not commit credentials or raw result artifacts. The root-level assessment and JMeter text files are sanitized summaries; the JMeter summary explicitly records that this demo run did not authenticate and is not a valid load baseline.
 
 The plan asserts that each virtual user reaches the dashboard after login and receives authenticated JSON from the employees API. If login redirects back to the login page or the API returns `401`, treat the run as failed rather than using its timings as authenticated application performance results. The shared public demo may reject concurrent or non-browser sessions; use a test/staging instance with authorized load-test credentials for a reliable authenticated baseline.
 
@@ -126,6 +126,8 @@ The plan asserts that each virtual user reaches the dashboard after login and re
 | Failure screenshots | `test-results/` |
 | Submission copy of the Playwright HTML report | `submission-artifacts/playwright-report/index.html` |
 | Submission copy of the test video | `submission-artifacts/test-run-video.webm` |
+| Assessment coverage summary | `assessment-requirements-status.txt` |
+| JMeter run outcome summary | `jmeter-test-results.txt` |
 
 ## Configuration
 

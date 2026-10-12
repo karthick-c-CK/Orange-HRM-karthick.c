@@ -1,0 +1,36 @@
+JMETER TEST RESULTS
+Target: https://opensource-demo.orangehrmlive.com
+Test profile: 5 virtual users, 10-second ramp-up, 60-second duration
+Run date: 2026-10-12
+
+OVERALL RESULT
+JMeter reported 183 samples:
+  Passed samples: 122
+  Failed samples: 61
+  Error rate: 33.33%
+  Average sample time: 506 ms
+  Minimum sample time: 274 ms
+  Maximum sample time: 1,171 ms
+  Throughput: approximately 3.0 samples/second
+
+CHECKS THAT PASSED
+  GET login page and CSRF token: HTTP 200 responses were received.
+  Other HTTP page samples were recorded as successful by JMeter when they
+  returned HTTP responses. A successful HTTP response alone does not prove
+  the requests used an authenticated session.
+
+CHECKS THAT FAILED
+  POST authenticate: 5 failures. The login did not finish at the dashboard;
+  it redirected back to the login page.
+  GET employees API page 1: 56 failures. The API returned HTTP 401 Unauthorized.
+
+CONCLUSION
+The JMeter plan executed, but the authenticated load test did not pass.
+Because login/API authentication failed, do not use these timings as a valid
+authenticated OrangeHRM performance baseline.
+
+Raw JMeter results:
+reports/jmeter-load-20261012-191926.jtl
+
+Generated JMeter HTML report:
+reports/jmeter-load-html-20261012-191926/index.html
